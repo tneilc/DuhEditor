@@ -30,7 +30,7 @@ MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "Cyka", wxPoint(30, 30), wxS
 }
 
 void MainFrame::OnSave(wxCommandEvent& event) {
-	wxFileDialog* saveDialog = new wxFileDialog(this, wxT("Save File~"), wxT(""), wxT(""),wxT("Text Files (*.txt)|*.txt|C++ Files (*.cpp)|*.cpp"), wxFD_SAVE);
+	wxFileDialog* saveDialog = new wxFileDialog(this, wxT("Save File~"), wxT(""), wxT(""),wxT("Text Files (*.txt)|*.txt|C++ Files (*.cpp)|*.cpp|Python Files (*.py)|*.py*"), wxFD_SAVE);
 	
 	int response = saveDialog->ShowModal();
 
@@ -42,7 +42,7 @@ void MainFrame::OnSave(wxCommandEvent& event) {
 
 
 void MainFrame::OnOpen(wxCommandEvent& event) {
-	wxFileDialog* openDialog = new wxFileDialog(this, wxT("Open File~"), wxT(""), wxT(""),wxT("Text Files (*.txt)|*.txt|C++ Files (*.cpp)|*.cpp"), wxFD_OPEN);
+	wxFileDialog* openDialog = new wxFileDialog(this, wxT("Open File~"), wxT(""), wxT(""),wxT("Text Files (*.txt)|*.txt|C++ Files (*.cpp)|*.cpp|Python Files (*.py)|*.py*"), wxFD_OPEN);
 	int response = openDialog->ShowModal();
 	if (response == wxID_OK) 
 		this->text->LoadFile(openDialog->GetPath());
