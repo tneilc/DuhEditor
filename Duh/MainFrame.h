@@ -1,6 +1,7 @@
 #pragma once
 #include "wx/wx.h"
 #include "wx/fontdlg.h"
+#include "prefDialog.h"
 #include <iostream>
 
 
@@ -18,11 +19,13 @@ public:
     
     
     void OnSave(wxCommandEvent& event);
-    void OnSaveAs(wxCommandEvent& event); // the click event for "save"
-    void OnOpen(wxCommandEvent& event); // the click event for "open"
+    void OnSaveAs(wxCommandEvent& event); 
+    void OnOpen(wxCommandEvent& event); 
     void OnChangeStyle(wxCommandEvent& event);
+    void PreferencesOpen(wxCommandEvent& event);
 
     wxString OpenFilePath;
+    bool doesExist = false;
 
     enum MenuIDs {
         IdStyle,IdPreferences,IdSave = 1000,IdSaveAs,IdOpen

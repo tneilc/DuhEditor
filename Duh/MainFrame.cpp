@@ -1,11 +1,14 @@
 #include "MainFrame.h"
 
 
+
 wxBEGIN_EVENT_TABLE(MainFrame,wxFrame)
 	EVT_MENU(IdSave, MainFrame::OnSave)
 	EVT_MENU(IdSaveAs, MainFrame::OnSaveAs)
 	EVT_MENU(IdOpen, MainFrame::OnOpen)
 	EVT_MENU(IdStyle, MainFrame::OnChangeStyle)
+	EVT_MENU(IdPreferences, MainFrame::PreferencesOpen)
+
 wxEND_EVENT_TABLE()
 
 
@@ -18,6 +21,7 @@ MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "Cyka", wxPoint(30, 30), wxS
 	this->file->Append(IdSave, wxT("&Save File\tCtrl-S"));
 	this->file->Append(IdSaveAs, wxT("&Save File As\tCtrl-Alt-S"));
 	this->file->Append(IdOpen, wxT("&Open File\tCtrl-O"));
+	
 
 	this->settings->Append(IdStyle, wxT("&Edit Style"));
 	this->settings->Append(IdPreferences, wxT("&Preferences"));
@@ -37,7 +41,12 @@ MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "Cyka", wxPoint(30, 30), wxS
 }
 
 void MainFrame::OnSave(wxCommandEvent& event) {
-	this->text->SaveFile(OpenFilePath);
+	if(doesExist)
+		this->text->SaveFile(OpenFilePath);
+	else
+	{
+		OnSaveAs(event);
+	}
 }
 
 void MainFrame::OnSaveAs(wxCommandEvent& event) {
@@ -45,9 +54,11 @@ void MainFrame::OnSaveAs(wxCommandEvent& event) {
 	
 	int response = saveDialog->ShowModal();
 
-	if (response == wxID_OK) 
+	if (response == wxID_OK) {
 		this->text->SaveFile(saveDialog->GetPath());
-	
+		OpenFilePath = saveDialog->GetPath();
+		doesExist = true;
+	}
 }
 
 
@@ -68,8 +79,15 @@ void MainFrame::OnChangeStyle(wxCommandEvent& event) {
 		text->SetFont(fontDialog->GetFontData().GetChosenFont());
 		text->SetForegroundColour(fontDialog->GetFontData().GetColour());
 	}
+
+	
 }
 
+void MainFrame::PreferencesOpen(wxCommandEvent& event) {
+	prefDialog dialog(this, -1, _("Empty Lol"), wxPoint(100, 100), wxSize(400, 400));
+
+	dialog.ShowModal();
+}
 
 MainFrame::~MainFrame() {
 
