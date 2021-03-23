@@ -8,7 +8,6 @@ wxBEGIN_EVENT_TABLE(MainFrame,wxFrame)
 	EVT_MENU(IdOpen, MainFrame::OnOpen)
 	EVT_MENU(IdStyle, MainFrame::OnChangeStyle)
 	EVT_MENU(IdPreferences, MainFrame::PreferencesOpen)
-
 wxEND_EVENT_TABLE()
 
 
