@@ -5,6 +5,7 @@ wxBEGIN_EVENT_TABLE(MainFrame,wxFrame)
 	EVT_MENU(IdSave, MainFrame::OnSave)
 	EVT_MENU(IdSaveAs, MainFrame::OnSaveAs)
 	EVT_MENU(IdOpen, MainFrame::OnOpen)
+	EVT_MENU(IdStyle, MainFrame::OnChangeStyle)
 wxEND_EVENT_TABLE()
 
 
@@ -12,18 +13,23 @@ wxEND_EVENT_TABLE()
 MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "Cyka", wxPoint(30, 30), wxSize(600, 600)){
 	this->menu = new wxMenuBar();
 	this->file = new wxMenu();
+	this->settings = new wxMenu();
 
 	this->file->Append(IdSave, wxT("&Save File\tCtrl-S"));
 	this->file->Append(IdSaveAs, wxT("&Save File As\tCtrl-Alt-S"));
 	this->file->Append(IdOpen, wxT("&Open File\tCtrl-O"));
 
+	this->settings->Append(IdStyle, wxT("&Edit Style"));
+	this->settings->Append(IdPreferences, wxT("&Preferences"));
+
 	this->menu->Append(file, wxT("&File")); 
+	this->menu->Append(settings, wxT("&Settings"));
 	this->SetMenuBar(menu);
 
 	this->text = new wxTextCtrl(this, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_MULTILINE);
 	wxFont textFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false);
 	this->text->SetFont(textFont);
-	this->text->SetForegroundColour(wxColour(145, 116, 116));
+	
 
 
 
@@ -56,6 +62,13 @@ void MainFrame::OnOpen(wxCommandEvent& event) {
 }
 
 
+void MainFrame::OnChangeStyle(wxCommandEvent& event) {
+	wxFontDialog* fontDialog = new wxFontDialog(this);
+	if (fontDialog->ShowModal() == wxID_OK) {
+		text->SetFont(fontDialog->GetFontData().GetChosenFont());
+		text->SetForegroundColour(fontDialog->GetFontData().GetColour());
+	}
+}
 
 
 MainFrame::~MainFrame() {
