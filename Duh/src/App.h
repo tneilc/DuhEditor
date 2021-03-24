@@ -1,6 +1,6 @@
 #pragma once
 #include "wx/wx.h"
-#include "MainFrame.h"
+#include "MainFrame/MainFrame.h"
 
 
 

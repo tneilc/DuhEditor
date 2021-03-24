@@ -1,7 +1,7 @@
 #pragma once
 #include "wx/wx.h"
 #include "wx/fontdlg.h"
-#include "prefDialog.h"
+#include "../Preferences/prefDialog.h"
 #include <iostream>
 
 
