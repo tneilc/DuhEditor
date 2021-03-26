@@ -18,7 +18,6 @@ This is my code editor project.I just started this project and I will be commiti
 - Syntax Highlighting
 - Settings
 - Better UI
-- Open files side menu
 
 # Reminder
 - Releases are not sync with commits so building the project for testing is a better way.
