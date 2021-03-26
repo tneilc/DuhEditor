@@ -1,7 +1,10 @@
 #pragma once
 #include "wx/wx.h"
 #include "wx/fontdlg.h"
+#include "wx/notebook.h"
+#include "wx/string.h"
 #include "../Preferences/prefDialog.h"
+#include "../BetterTextCtrl/BetterTextCtrl.h"
 #include <iostream>
 
 
@@ -16,19 +19,25 @@ public:
     wxMenu* file; 
     wxMenu* settings;
     wxTextCtrl* text;
+    wxPanel* panel;
+    wxNotebook* noteBook;
+    wxBoxSizer* panelSizer;
+
     
-    
+
     void OnSave(wxCommandEvent& event);
     void OnSaveAs(wxCommandEvent& event); 
     void OnOpen(wxCommandEvent& event); 
+    void OnNewFile(wxCommandEvent& event);
     void OnChangeStyle(wxCommandEvent& event);
     void PreferencesOpen(wxCommandEvent& event);
+    void AddToNoteBook(wxCommandEvent& event, wxFileDialog* openDialog);
+    bool doesExist();
 
-    wxString OpenFilePath;
-    bool doesExist = false;
+
 
     enum MenuIDs {
-        IdStyle,IdPreferences,IdSave = 1000,IdSaveAs,IdOpen
+        IdStyle,IdPreferences,IdSave = 1000,IdSaveAs,IdOpen,IdNewFile
     };
 
 	wxDECLARE_EVENT_TABLE();

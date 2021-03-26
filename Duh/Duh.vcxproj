@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\BetterTextCtrl\BetterTextCtrl.h" />
     <ClInclude Include="src\App.h" />
     <ClInclude Include="src\MainFrame\MainFrame.h" />
     <ClInclude Include="src\Preferences\prefDialog.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\BetterTextCtrl\BetterTextCtrl.cpp" />
     <ClCompile Include="src\App.cpp" />
     <ClCompile Include="src\MainFrame\MainFrame.cpp" />
     <ClCompile Include="src\Preferences\prefDialog.cpp" />
