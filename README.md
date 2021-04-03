@@ -15,7 +15,7 @@ This is my code editor project.I just started this project and I will be commiti
 - If you are going to build it yourself please check requirements.
 
 # TO-DO (main things)
-- Syntax Highlighting
+- Syntax Highlighting ( CURRENTLY WORKING ON IT )
 - Settings
 - Better UI
 
