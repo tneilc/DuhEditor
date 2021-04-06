@@ -9,7 +9,7 @@ public:
 		const wxSize& size = wxDefaultSize,
 		long style = wxDEFAULT_DIALOG_STYLE);
 public:
-
+	
 
 };
 

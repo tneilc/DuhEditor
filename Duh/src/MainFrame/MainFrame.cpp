@@ -13,14 +13,14 @@ wxEND_EVENT_TABLE()
 
 
 
-MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "Cyka", wxPoint(30, 30), wxSize(600, 600)){
+MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "Cyka", wxPoint(30, 30), wxSize(800, 900)){
 	this->menu = new wxMenuBar();
 	this->file = new wxMenu();
 	this->settings = new wxMenu();
-	this->panel = new wxPanel(this, wxID_ANY,wxDefaultPosition,wxDefaultSize);
+	this->panel = new wxPanel(this, wxID_ANY);
 	this->noteBook = new wxNotebook(panel, wxID_ANY);
 	this->panelSizer = new wxBoxSizer(wxHORIZONTAL);
-	//this->text = new wxTextCtrl(noteBook, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_MULTILINE);
+	
 
 	this->file->Append(IdSave, wxT("&Save File\tCtrl-S"));
 	this->file->Append(IdSaveAs, wxT("&Save File As\tCtrl-Alt-S"));
@@ -35,12 +35,13 @@ MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "Cyka", wxPoint(30, 30), wxS
 	this->SetMenuBar(menu);
 
 
-	/*wxFont textFont(12, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL, false);
-	this->text->SetFont(textFont);
-	noteBook->AddPage(text,L"wtf");*/
 	panelSizer->Add(noteBook, 1, wxEXPAND);
 	panel->SetSizer(panelSizer);
 
+	wxStyledTextCtrl* textField = new wxStyledTextCtrl(noteBook);
+	textField->SetMarginType(1, wxSTC_MARGIN_NUMBER); 
+	textField->SetMarginWidth(1, 24);
+	noteBook->AddPage(textField, L"Untitled", true);
 
 }
 
@@ -48,7 +49,7 @@ MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "Cyka", wxPoint(30, 30), wxS
 //FIX THIS FUNCTION
 void MainFrame::OnSave(wxCommandEvent& event) {
 	if (doesExist() == true) {
-		BetterTextCtrl* toChange = (BetterTextCtrl*)noteBook->GetCurrentPage();
+		MeineTextEdit* toChange = (MeineTextEdit*)noteBook->GetCurrentPage();
 		toChange->SaveFile(toChange->filepath);
 	}
 	else {
@@ -58,7 +59,7 @@ void MainFrame::OnSave(wxCommandEvent& event) {
 
 void MainFrame::OnSaveAs(wxCommandEvent& event) {
 	wxFileDialog* saveDialog = new wxFileDialog(this, wxT("Save File~"), wxT(""), wxT(""),wxT("Text Files (*.txt)|*.txt|C++ Files (*.cpp)|*.cpp|Python Files (*.py)|*.py"), wxFD_SAVE);
-	BetterTextCtrl* toSave = (BetterTextCtrl*)noteBook->GetCurrentPage();
+	MeineTextEdit* toSave = (MeineTextEdit*)noteBook->GetCurrentPage();
 	int response = saveDialog->ShowModal();
 
 	if (response == wxID_OK) {
@@ -84,8 +85,8 @@ void MainFrame::OnOpen(wxCommandEvent& event) {
 void MainFrame::OnChangeStyle(wxCommandEvent& event) {
 	wxFontDialog* fontDialog = new wxFontDialog(this);
 	if (fontDialog->ShowModal() == wxID_OK) {
-		text->SetFont(fontDialog->GetFontData().GetChosenFont());
-		text->SetForegroundColour(fontDialog->GetFontData().GetColour());
+		noteBook->GetCurrentPage()->SetFont(fontDialog->GetFontData().GetChosenFont());
+		noteBook->GetCurrentPage()->SetForegroundColour(fontDialog->GetFontData().GetColour());
 	}
 
 	
@@ -100,15 +101,16 @@ void MainFrame::PreferencesOpen(wxCommandEvent& event) {
 
 
 void MainFrame::AddToNoteBook(wxCommandEvent& event, wxFileDialog* openDialog) {
-	BetterTextCtrl* textField = new BetterTextCtrl(noteBook, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_MULTILINE);
+	MeineTextEdit* textField = new MeineTextEdit(noteBook, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	textField->isSaved = true;
 	textField->filepath = openDialog->GetPath();
+	textField->LoadFile(openDialog->GetPath());
 	noteBook->AddPage(textField, openDialog->GetFilename());
 }
 
 
 void MainFrame::OnNewFile(wxCommandEvent& event) {
-	BetterTextCtrl* textField = new BetterTextCtrl(noteBook, wxID_ANY, wxT(""), wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER | wxTE_MULTILINE);
+	MeineTextEdit* textField = new MeineTextEdit(noteBook, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	noteBook->AddPage(textField,L"Untitled",true);
 	event.Skip();
 	
@@ -116,7 +118,7 @@ void MainFrame::OnNewFile(wxCommandEvent& event) {
 
 
 bool MainFrame::doesExist() {
-	BetterTextCtrl* wad = (BetterTextCtrl*)noteBook->GetCurrentPage();
+	MeineTextEdit* wad = (MeineTextEdit*)noteBook->GetCurrentPage();
 	return wad->isSaved;
 	
 }
