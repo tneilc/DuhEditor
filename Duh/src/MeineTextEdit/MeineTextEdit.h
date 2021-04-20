@@ -16,5 +16,7 @@ public:
 public:
     bool isSaved;
     wxString filepath;
+
+ 
 };
 

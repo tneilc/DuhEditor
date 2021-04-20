@@ -23,6 +23,7 @@ public:
     wxPanel* panel;
     wxNotebook* noteBook;
     wxBoxSizer* panelSizer;
+    wxBoxSizer* Sizer;
 
     
 
@@ -30,15 +31,18 @@ public:
     void OnSaveAs(wxCommandEvent& event); 
     void OnOpen(wxCommandEvent& event); 
     void OnNewFile(wxCommandEvent& event);
-    void OnChangeStyle(wxCommandEvent& event);
     void PreferencesOpen(wxCommandEvent& event);
     void AddToNoteBook(wxCommandEvent& event, wxFileDialog* openDialog);
+    void CloseFile(wxCommandEvent& event);
+    
     bool doesExist();
 
 
 
     enum MenuIDs {
-        IdStyle,IdPreferences,IdSave = 1000,IdSaveAs,IdOpen,IdNewFile
+        IdStyle,IdPreferences,
+        IdSave = 1000,IdSaveAs,IdOpen,IdNewFile,
+        IdCloseFile
     };
 
 	wxDECLARE_EVENT_TABLE();

@@ -6,11 +6,10 @@ wxBEGIN_EVENT_TABLE(MainFrame,wxFrame)
 	EVT_MENU(IdSave, MainFrame::OnSave)
 	EVT_MENU(IdSaveAs, MainFrame::OnSaveAs)
 	EVT_MENU(IdOpen, MainFrame::OnOpen)
-	EVT_MENU(IdStyle, MainFrame::OnChangeStyle)
 	EVT_MENU(IdPreferences, MainFrame::PreferencesOpen)
 	EVT_MENU(IdNewFile, MainFrame::OnNewFile)
+	EVT_MENU(IdCloseFile,MainFrame::CloseFile)
 wxEND_EVENT_TABLE()
-
 
 
 MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "Cyka", wxPoint(30, 30), wxSize(800, 900)){
@@ -20,14 +19,16 @@ MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "Cyka", wxPoint(30, 30), wxS
 	this->panel = new wxPanel(this, wxID_ANY);
 	this->noteBook = new wxNotebook(panel, wxID_ANY);
 	this->panelSizer = new wxBoxSizer(wxHORIZONTAL);
-	
+	this->Sizer = new wxBoxSizer(wxHORIZONTAL);
 
 	this->file->Append(IdSave, wxT("&Save File\tCtrl-S"));
 	this->file->Append(IdSaveAs, wxT("&Save File As\tCtrl-Alt-S"));
 	this->file->Append(IdOpen, wxT("&Open File\tCtrl-O"));
 	this->file->Append(IdNewFile, wxT("&New File\tCtrl-N"));
-	
-	this->settings->Append(IdStyle, wxT("&Edit Style"));
+	this->file->AppendSeparator();
+	this->file->Append(IdCloseFile, wxT("&Close File\tCtrl-Del"));
+
+
 	this->settings->Append(IdPreferences, wxT("&Preferences"));
 
 	this->menu->Append(file, wxT("&File")); 
@@ -38,12 +39,19 @@ MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "Cyka", wxPoint(30, 30), wxS
 	panelSizer->Add(noteBook, 1, wxEXPAND);
 	panel->SetSizer(panelSizer);
 
-	wxStyledTextCtrl* textField = new wxStyledTextCtrl(noteBook);
+	Sizer->Add(panel, 1, wxEXPAND);
+	this->SetSizer(Sizer);
+
+	MeineTextEdit* textField = new MeineTextEdit(noteBook,123);
 	textField->SetMarginType(1, wxSTC_MARGIN_NUMBER); 
 	textField->SetMarginWidth(1, 24);
+	
 	noteBook->AddPage(textField, L"Untitled", true);
+	
 
 }
+
+
 
 
 //FIX THIS FUNCTION
@@ -82,15 +90,6 @@ void MainFrame::OnOpen(wxCommandEvent& event) {
 }
 
 
-void MainFrame::OnChangeStyle(wxCommandEvent& event) {
-	wxFontDialog* fontDialog = new wxFontDialog(this);
-	if (fontDialog->ShowModal() == wxID_OK) {
-		noteBook->GetCurrentPage()->SetFont(fontDialog->GetFontData().GetChosenFont());
-		noteBook->GetCurrentPage()->SetForegroundColour(fontDialog->GetFontData().GetColour());
-	}
-
-	
-}
 
 void MainFrame::PreferencesOpen(wxCommandEvent& event) {
 	prefDialog dialog(this, -1, _("Empty Lol"), wxPoint(100, 100), wxSize(400, 400));
@@ -116,6 +115,14 @@ void MainFrame::OnNewFile(wxCommandEvent& event) {
 	
 }
 
+void MainFrame::CloseFile(wxCommandEvent& event) {
+	noteBook->DeletePage(noteBook->GetSelection());
+	if (noteBook->GetPageCount() == 0)
+	{
+		OnNewFile(event);
+	}
+	
+}
 
 bool MainFrame::doesExist() {
 	MeineTextEdit* wad = (MeineTextEdit*)noteBook->GetCurrentPage();
@@ -128,3 +135,16 @@ MainFrame::~MainFrame() {
 
 }
 
+/*
+
+#define MAX 0
+int main(int argc, char *argv[])\n"
+{
+	for (int n=0; n<MAX; n++)
+    {
+		printf("Hello World ");
+    }
+    return 0;
+};
+
+*/
