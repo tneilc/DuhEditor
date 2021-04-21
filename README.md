@@ -3,7 +3,7 @@
 This is my code editor project.I just started this project and I will be commiting everything to github.
 
 # Contributing
-- Make a pull request and I will commit it if necessary.
+- Make a pull request and I will merge it if necessary.
 - If you have good ideas open an issue and tell me about your idea.
 
 # Requirements 
