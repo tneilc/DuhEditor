@@ -4,9 +4,11 @@
 #include "wx/notebook.h"
 #include "wx/string.h"
 #include "wx/stc/stc.h"
-#include "../MeineTextEdit/MeineTextEdit.h"
+#include "../Customs/MeineTextEdit/MeineTextEdit.h"
 #include "../Preferences/prefDialog.h"
 #include "../BetterTextCtrl/BetterTextCtrl.h"
+#include <wx/filename.h>
+#include <wx/aui/auibook.h>
 #include <iostream>
 
 
@@ -21,7 +23,7 @@ public:
     wxMenu* file; 
     wxMenu* settings;
     wxPanel* panel;
-    wxNotebook* noteBook;
+    wxAuiNotebook* noteBook;
     wxBoxSizer* panelSizer;
     wxBoxSizer* Sizer;
 
@@ -34,7 +36,8 @@ public:
     void PreferencesOpen(wxCommandEvent& event);
     void AddToNoteBook(wxCommandEvent& event, wxFileDialog* openDialog);
     void CloseFile(wxCommandEvent& event);
-    
+
+
     bool doesExist();
 
 
@@ -42,7 +45,8 @@ public:
     enum MenuIDs {
         IdStyle,IdPreferences,
         IdSave = 1000,IdSaveAs,IdOpen,IdNewFile,
-        IdCloseFile
+        IdCloseFile,
+        MenuID,NoteBookID
     };
 
 	wxDECLARE_EVENT_TABLE();

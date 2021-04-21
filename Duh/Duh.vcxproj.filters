@@ -24,7 +24,7 @@
     <ClInclude Include="src\MainFrame\MainFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\MeineTextEdit\MeineTextEdit.h">
+    <ClInclude Include="src\Customs\MeineTextEdit\MeineTextEdit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,7 +38,10 @@
     <ClCompile Include="src\MainFrame\MainFrame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MeineTextEdit\MeineTextEdit.cpp">
+    <ClCompile Include="src\Customs\MeineTextEdit\MeineTextEdit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Customs\MeineTextEdit\Lexer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

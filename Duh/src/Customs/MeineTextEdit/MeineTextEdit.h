@@ -5,6 +5,7 @@
 #include "wx/string.h"
 #include "wx/stc/stc.h"
 
+
 class MeineTextEdit : public wxStyledTextCtrl
 {
 public:
@@ -12,10 +13,14 @@ public:
         const wxPoint& pos = wxDefaultPosition,
         const wxSize& size = wxDefaultSize, long style = 0,
         const wxString& name = wxSTCNameStr);
+private:
+    void SetupLexer();
+    void FindLexer(wxString ex);
 
 public:
     bool isSaved;
     wxString filepath;
+    wxString extension;
 
  
 };

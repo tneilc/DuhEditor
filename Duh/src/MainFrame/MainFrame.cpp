@@ -12,15 +12,31 @@ wxBEGIN_EVENT_TABLE(MainFrame,wxFrame)
 wxEND_EVENT_TABLE()
 
 
-MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "Cyka", wxPoint(30, 30), wxSize(800, 900)){
+MainFrame::MainFrame() : wxFrame(nullptr, MenuID, "Cyka", wxPoint(30, 30), wxSize(800, 900)){
+
+	
+	
+	//Setting up the elements
 	this->menu = new wxMenuBar();
 	this->file = new wxMenu();
 	this->settings = new wxMenu();
 	this->panel = new wxPanel(this, wxID_ANY);
-	this->noteBook = new wxNotebook(panel, wxID_ANY);
+	this->noteBook = new wxAuiNotebook(panel, NoteBookID);
 	this->panelSizer = new wxBoxSizer(wxHORIZONTAL);
 	this->Sizer = new wxBoxSizer(wxHORIZONTAL);
 
+	//Style
+
+	/*
+	Fuck
+	Fuck
+	Fuck 
+	Not Working
+	I am retarded
+	*/
+
+
+	//Menu Bar Initialize
 	this->file->Append(IdSave, wxT("&Save File\tCtrl-S"));
 	this->file->Append(IdSaveAs, wxT("&Save File As\tCtrl-Alt-S"));
 	this->file->Append(IdOpen, wxT("&Open File\tCtrl-O"));
@@ -28,20 +44,20 @@ MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "Cyka", wxPoint(30, 30), wxS
 	this->file->AppendSeparator();
 	this->file->Append(IdCloseFile, wxT("&Close File\tCtrl-Del"));
 
-
 	this->settings->Append(IdPreferences, wxT("&Preferences"));
 
 	this->menu->Append(file, wxT("&File")); 
 	this->menu->Append(settings, wxT("&Settings"));
 	this->SetMenuBar(menu);
 
-
+	//Setting up the sizers
 	panelSizer->Add(noteBook, 1, wxEXPAND);
 	panel->SetSizer(panelSizer);
 
 	Sizer->Add(panel, 1, wxEXPAND);
 	this->SetSizer(Sizer);
 
+	//Initializing the first notebook page
 	MeineTextEdit* textField = new MeineTextEdit(noteBook,123);
 	textField->SetMarginType(1, wxSTC_MARGIN_NUMBER); 
 	textField->SetMarginWidth(1, 24);
@@ -53,8 +69,6 @@ MainFrame::MainFrame() : wxFrame(nullptr, wxID_ANY, "Cyka", wxPoint(30, 30), wxS
 
 
 
-
-//FIX THIS FUNCTION
 void MainFrame::OnSave(wxCommandEvent& event) {
 	if (doesExist() == true) {
 		MeineTextEdit* toChange = (MeineTextEdit*)noteBook->GetCurrentPage();
@@ -91,6 +105,7 @@ void MainFrame::OnOpen(wxCommandEvent& event) {
 
 
 
+
 void MainFrame::PreferencesOpen(wxCommandEvent& event) {
 	prefDialog dialog(this, -1, _("Empty Lol"), wxPoint(100, 100), wxSize(400, 400));
 
@@ -103,7 +118,9 @@ void MainFrame::AddToNoteBook(wxCommandEvent& event, wxFileDialog* openDialog) {
 	MeineTextEdit* textField = new MeineTextEdit(noteBook, wxID_ANY, wxDefaultPosition, wxDefaultSize);
 	textField->isSaved = true;
 	textField->filepath = openDialog->GetPath();
+	textField->extension = wxFileName(openDialog->GetPath()).GetExt();
 	textField->LoadFile(openDialog->GetPath());
+	textField->AppendText(textField->extension);
 	noteBook->AddPage(textField, openDialog->GetFilename());
 }
 
